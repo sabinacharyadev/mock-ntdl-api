@@ -94,6 +94,26 @@ app.put("/api/v1/taskList/:id", (req, res) => {
   }
 });
 
+// /////////////////////////////
+// DELETE
+app.delete("/api/v1/taskList/:id", (req, res) => {
+  const { id } = req.params;
+  const taskList = TASK_LIST.find((item) => item.id === id);
+  if (taskList) {
+    const updatedTaskList = TASK_LIST.filter((item) => item.id !== id);
+    res.json({
+      message: "Task deleted",
+      status: "Success",
+      data: updatedTaskList,
+    });
+  } else {
+    res.json({
+      message: "Task not deleted",
+      status: "Error",
+    });
+  }
+});
+
 // START THE SERVER
 app.listen(PORT, (error) => {
   error
