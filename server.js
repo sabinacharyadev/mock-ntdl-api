@@ -46,6 +46,11 @@ app.get("/api/v1/taskList/:id", (req, res) => {
       message: "Task found",
       data: task,
     });
+  } else {
+    res.json({
+      message: "Task not found",
+      status: "Error",
+    });
   }
 });
 
@@ -53,6 +58,40 @@ app.get("/api/v1/taskList/:id", (req, res) => {
 // POST
 app.post("/api/v1/taskList", (req, res) => {
   const { id, task, time } = req.body;
+  if (id && task && time) {
+    res.json({
+      message: "Task added",
+      status: "Success",
+      code: 200,
+      data: [...TASK_LIST, { id, task, time }],
+    });
+  } else {
+    res.json({
+      message: "Task not added",
+      status: "Error",
+    });
+  }
+});
+
+// ///////////////////////////////
+// PUT | UPDATE
+app.put("/api/v1/taskList/:id", (req, res) => {
+  const { id } = req.params;
+  const { task, time } = req.body;
+  const taskItem = TASK_LIST.find((item) => item.id === id);
+  if (taskItem) {
+    const updatedTaskList = TASK_LIST.filter((item) => item.id !== id);
+    res.json({
+      message: "Task Updated",
+      status: "Success",
+      data: [...updatedTaskList, { id, task, time }],
+    });
+  } else {
+    res.json({
+      message: "Task not updated",
+      status: "Error",
+    });
+  }
 });
 
 // START THE SERVER
