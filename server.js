@@ -114,9 +114,14 @@ app.delete("/api/v1/taskList/:id", (req, res) => {
   }
 });
 
-// START THE SERVER
-app.listen(PORT, (error) => {
-  error
-    ? console.log(error.message)
-    : console.log(`Server running on http://localhost:${PORT}`);
-});
+// START THE SERVER EXPRESS
+// app.listen(PORT, (error) => {
+//   error
+//     ? console.log(error.message)
+//     : console.log(`Server running on http://localhost:${PORT}`);
+// });
+
+// Stateless server
+export default (req, res) => {
+  app(req, res);
+};
